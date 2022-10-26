@@ -1,0 +1,26 @@
+server:
+  port: 8195
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: order
+          uri: lb://order-service/
+          predicates:
+            - Path=/order/**
+        - id: payment
+          uri: http://localhost:8082/
+          predicates:
+            - Path=/payment/**
+          
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url: 
+     defaultZone: http://localhost:8761/eureka
+  instance:
+    hostname: localhost
+         
